@@ -1,0 +1,62 @@
+{
+  "name": "eliquidines",
+  "version": "1.0.0",
+  "description": "A small e-liquid crafting app built with electron and mithril",
+  "keywords": [
+    "e-liquid",
+    "recipe",
+    "diy",
+    "parcel",
+    "mithril",
+    "electron"
+  ],
+  "author": "Glantucan",
+  "license": "MIT",
+  "main": "electron.js",
+  "scripts": {
+    "dev": "parcel ./src/index.html -d build/",
+    "start-dev": "ELECTRON_START_URL=http://localhost:1234 electron .",
+    "start": "electron .",
+    "build": "parcel build ./src/index.html -d build/ --public-url ./",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "clean": "rm -r ./build; rm -r ./dist"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.5",
+    "colors.css": "^3.0.0",
+    "mithril": "^2.0.3",
+    "preload-it": "^1.2.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "cssnano": "^4.1.10",
+    "electron": "^3.0.4",
+    "electron-builder": "^20.28.4",
+    "electron-reload": "^1.2.5",
+    "eslint": "^6.1.0",
+    "eslint-config-semistandard": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "parcel-bundler": "^1.10.3",
+    "parcel-plugin-static-files-copy": "^2.2.1"
+  },
+  "staticFiles": {
+    "staticPath": "public",
+    "watcherGlob": "**"
+  },
+  "build": {
+    "appId": "parcel.mithril.electron",
+    "mac": {
+      "category": "your.app.category.type"
+    },
+    "files": [
+      "electron.js",
+      "build/*"
+    ]
+  }
+}
