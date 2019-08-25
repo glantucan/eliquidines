@@ -20,21 +20,17 @@ function createAppFolder() {
     }
 }
 
-/* function testSave() {
-    //var filePath = path.join(remote.app.getPath('home'), '.eliquidines/test.json') 
-    var filePath = path.join(appFolder, 'test.json')
-    fs.writeFile(filePath, JSON.stringify(data, null, 2), function(err) {
-        if (err) {
-            console.log('oops!', err)
-        } else {
-            console.log('File saved')
-        }
-    }) 
-} */
 function testSave() {
     //var filePath = path.join(remote.app.getPath('home'), '.eliquidines/test.json')
     var filePath = path.join(recipesFolder, 'test.json');
     return fs.writeFileAsync(filePath, JSON.stringify(data, null, 2));
+}
+
+
+function loadRecipeList(){
+    return fs.readFileAsync(
+        path.join(appFolder, 'recipesList.json')
+    )
 }
 
 function updateRecipesList(recipesList) {
@@ -62,17 +58,9 @@ function loadRecipe(recipeId) {
     );
 }
 
-function loadAllRecipes() {
-    var recipesList;
-    return fs.readFileAsync(
-        path.join(appFolder, 'recipesList.json')
-    )
-    .then( (result) => {
-            recipesList = JSON.parse(result);
-            var loadFilePromises = recipesList.map( (recipeId) => loadRecipe(recipeId));
-            return Promise.all(loadFilePromises)
-        } 
-    );
+function loadAllRecipes(recipeList) {
+    var loadFilePromises = recipeList.map( (recipeId) => loadRecipe(recipeId));
+    return Promise.all(loadFilePromises);
 }
 
-export default { createAppFolder, updateRecipesList, saveRecipe, loadRecipe, loadAllRecipes, testSave };
+export default { createAppFolder, loadRecipeList, updateRecipesList, saveRecipe, loadRecipe, loadAllRecipes, testSave };
