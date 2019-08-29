@@ -48,7 +48,7 @@ function initialize(onInitialized) {
 
 var fakeBatchData = { 
     "name": "Heisenberg 1",
-    "date": "2018-07-22T07:22:13",
+    "date": "2018-07-22T07:22",
     "target": {
         "volume": 100,
         "pg": 61,
@@ -84,6 +84,13 @@ var fakeBatchData = {
             "pgvg": 1,
             "volume": 17,
             "weight": 18.34
+        },
+        {
+            "name": "Bohr",
+            "concentration": 3,
+            "pgvg": 1,
+            "volume": 3,
+            "weight": 3.21
         }
     ],
     "molecules": [
@@ -105,7 +112,7 @@ export default {
     },
     setBatchValue(property, value, type) {
         var val;
-        if(property.includes('.')) {
+        if (property.includes('.')) {
             var propertyPath = property.split('.');
             var prop = propertyPath.pop();
             var propertyParent = propertyPath.reduce(
@@ -128,6 +135,11 @@ export default {
             currentBatchData[property] = (val !== undefined) ? val : value;
         }
         console.log(currentBatchData);
+    },
+    removeFlavour(idx2remove) {
+         currentBatchData.flavours = 
+            currentBatchData.flavours.filter( (flavour, idx) => idx != idx2remove );
+        console.log(currentBatchData.flavours) 
     }
 };
 

@@ -20,6 +20,10 @@
     
 }
 
+.remove-row-btn {
+    width:1.4em;
+}
+
 
 .data-cell {
     box-sizing: border-box;
@@ -52,7 +56,7 @@
     border: none;
 }
 .row-title .input-cell-value {
-    width: calc(100% - 1.5em);
+    width: calc(100% - 3em);
 }
 
 

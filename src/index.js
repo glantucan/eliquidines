@@ -17,10 +17,30 @@ var root = document.getElementById('App');
 function CellsRow() {
     return {
         view(vnode) {
-            var { className } = vnode.attrs;
-            return m('.cells-row', {
-                    class: className
+
+            var { className, key, idx, removeRow } = vnode.attrs;
+
+            var isOddRow = 'idx' in vnode.attrs && !(idx % 2) ;    
+
+            console.log(className, isOddRow);
+            return m('.cells-row' + (isOddRow ? ' cells-row-odd' : ''), {
+                    class: className, 
+                    key,
                 },
+                key ? 
+                    m('button', {
+                            class:'remove-row-btn', 
+                            type: 'button', // Avoid submiting the form!!
+                            onclick: function(e) { 
+                                e.stopImmediatePropagation(); 
+                                e.preventDefault();
+                                console.log('remove row', idx);
+                                removeRow(idx);
+                            }
+                        },
+                        '-'
+                    ) : 
+                    '',
                 vnode.children
             );
         }
@@ -223,33 +243,43 @@ function BatchForm() {
                                 value: 'Weight (mg)',
                             }),
                         ),
-                        m( CellsRow, {
-                                className: 'cells-row-odd batch-base-pg'
-                            },
-                            m( InputCell, {
-                                className: 'w-40 row-title',
-                                value: batchData.flavours[0].name
-                            }),
-                            m( InputCell, {
-                                className: 'w-15 center batch-flavour-concentration',
-                                type: 'number',
-                                value: batchData.flavours[0].concentration,
-                            }),
-                            m( InputCell, {
-                                className: 'w-15 center batch-flavour-pg-vg-ratio',
-                                type: 'number',
-                                value: batchData.flavours[0].pgvg,
-                            }),
-                            m( DataCell, {
-                                className: 'w-15 center batch-base-pg-volume',
-                                type: 'number',
-                                value: batchData.flavours[0].volume,
-                            }),
-                            m( DataCell, {
-                                className: 'w-15 center batch-base-pg-weight',
-                                type: 'number',
-                                value: batchData.flavours[0].weight,
-                            }),
+                        m( '.flavour-rows', {},
+                            batchData.flavours.map(
+                                function(flavour, idx) {
+                                    return m( CellsRow, {
+                                                className: 'batch-base-pg', 
+                                                removeRow: model.removeFlavour, 
+                                                idx: idx,
+                                                key: 'flavour-' + idx
+                                            },
+                                            m( InputCell, {
+                                                className: 'w-40 row-title',
+                                                value: flavour.name
+                                            }),
+                                            m( InputCell, {
+                                                className: 'w-15 center batch-flavour-concentration',
+                                                type: 'number',
+                                                value: flavour.concentration,
+                                            }),
+                                            m( InputCell, {
+                                                className: 'w-15 center batch-flavour-pg-vg-ratio',
+                                                type: 'number',
+                                                value: flavour.pgvg,
+                                            }),
+                                            m( DataCell, {
+                                                className: 'w-15 center batch-base-pg-volume',
+                                                type: 'number',
+                                                value: flavour.volume,
+                                            }),
+                                            m( DataCell, {
+                                                className: 'w-15 center batch-base-pg-weight',
+                                                type: 'number',
+                                                value: flavour.weight,
+                                            })
+                                        );
+                                }
+
+                            )
                         ),
                     )
 
