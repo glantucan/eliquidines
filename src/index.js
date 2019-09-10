@@ -281,6 +281,9 @@ function BatchForm() {
 
                             )
                         ),
+                        m('button.add-flavour-btn',{
+                            onclick: ()=>{}
+                        }, 'Add Flavour')
                     )
 
                 ]
